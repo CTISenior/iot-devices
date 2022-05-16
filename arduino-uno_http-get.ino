@@ -61,25 +61,25 @@ void loop() {
   }
   float hic = dht.computeHeatIndex(temp, hum, false);
 
-  String field = "GET /api/gateway/devices";
-  field += "?serialNumber=";
-  field += SN;
-  field += "&temp=";
-  field += temp;
-  field += "&hum=";
-  field += hum;
-  field += "\r\n\r\n"; 
+  String data = "GET /api/gateway/devices";
+  data += "?serialNumber=";
+  data += SN;
+  data += "&temp=";
+  data += temp;
+  data += "&hum=";
+  data += hum;
+  data += "\r\n\r\n"; 
 
   esp.print("AT+CIPSEND=");
-  esp.println(field.length()+2);
+  esp.println(data.length()+2);
   //delay(2000);
   if(esp.find(">")){
     long now = millis();
     if (now - lastMsg > 10000) {
       lastMsg = now;
       Serial.println(lastMsg);
-      esp.print(field);
-      Serial.println(field);
+      esp.print(data);
+      Serial.println(data);
       Serial.println("Telemetry sent");
     }
   }
